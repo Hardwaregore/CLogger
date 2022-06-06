@@ -5,6 +5,10 @@ green=`tput setaf 2`
 reset=`tput sgr0`
 
 command -v locate > /dev/null || printf "\n${red}CRITICAL ERROR! ABORTING! (Err: locate NOT INSTALLED)${reset}\n\n"
+if [ "$(id -u)" != "0" ]; then
+    printf "\n ${red}CRITICAL ERROR! ABORTING! (Err: NOT root)${reset} \n \n" 1>&2
+    exit 1
+fi
 
 touch log.txt
 $currentdir=$(pwd)
