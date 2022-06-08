@@ -4,29 +4,32 @@ red=`tput setaf 1`
 green=`tput setaf 2`
 reset=`tput sgr0`
 
-command -v locate > /dev/null || printf "\n${red}CRITICAL ERROR! ABORTING! (Err: locate NOT INSTALLED)${reset}\n\n"
 if [ "$(id -u)" != "0" ]; then
     printf "\n ${red}CRITICAL ERROR! ABORTING! (Err: NOT root)${reset} \n \n" 1>&2
     exit 1
 fi
 
+mkdir /log > /dev/null
+cd /log
 touch log.txt
-$currentdir=$(pwd)
 rm -rf users.txt
 touch users.txt
 cd /home
-printf "%s\n" * >$currentdir/user.txt
-echo "root" >> $currentdir/user.txt
-cd $currentdir
+printf "%s\n" * >/log/user.txt
+echo "root" >> /log/user.txt
+cd /log
 
 
 startlogging() {
-  
+  mv /log/.bashrc_new 
 }
 
 if [ $1 == "initialize" ]; then
   echo "Moving 'clogger.sh' to '/usr/local/bin'..."
   mv clogger.sh /usr/local/bin/clogger
+  mkdir /log > /dev/null
+  echo "Moving the bashrc file to '/log'..."
+  mv .bashrc_new /log
   printf "\n ${green}CLogger is now ready for use! Run `clogger --help` or `clogger -h` to get help for this script${reset}"
   exit 1
   
