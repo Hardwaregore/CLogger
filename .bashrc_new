@@ -9,11 +9,12 @@ fi
 user=$(whoami)
 hostname=$(hostname)
 
+clear
 
 while true; do
 	where=$(pwd)
 	read -p "$user@$hostname $where$prompt" command
-	echo "$user ran: `$command`" >> /log/log.txt
+	echo "$user ran: '$command'" >> /log/log.txt
 	$command
 	
 done
