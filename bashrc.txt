@@ -1,0 +1,7 @@
+# bashrc by CLogger (https://github.com/Hardwaregore/CLogger)
+
+while true; do
+	read -p "$ " command
+	$command
+	
+done
