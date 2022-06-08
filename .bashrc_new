@@ -1,7 +1,19 @@
 # bashrc by CLogger (https://github.com/Hardwaregore/CLogger)
 
+if [ "$(id -u)" != "0" ]; then
+   prompt="$"
+else
+   prompt="#"
+fi
+
+user=$(whoami)
+hostname=$(hostname)
+
+
 while true; do
-	read -p "$ " command
+	where=$(pwd)
+	read -p "$user@$hostname $where$prompt" command
+	echo "$user ran: `$command`" >> /log/log.txt
 	$command
 	
 done
