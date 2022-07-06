@@ -21,7 +21,21 @@ cd /log
 
 
 startlogging() {
-  mv /log/.bashrc_new 
+    printf "\n ${green}Logging started...${reset} \n \n"
+    # moves /log/.bashrc_new to every user's home directory
+    for i in `cat /log/user.txt`; do
+        cp /log/.bashrc_new /home/$i/.bashrc
+    done
+    # moves /log/.bashrc_new to root's home directory
+    cp /log/.bashrc_new /root/.bashrc
+
+    # gets the last line of /log/log.txt when the file is modified
+    while true; do
+        tail -n 1 /log/log.txt | while read line; do
+            echo $line
+        done
+        sleep 1
+    done &
 }
 
 if [ $1 == "initialize" ]; then
