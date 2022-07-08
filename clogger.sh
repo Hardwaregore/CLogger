@@ -47,8 +47,7 @@ startlogging() {
 
 if [ $1 == "initialize" ]; then
   echo "Moving 'clogger.sh' to '/usr/local/bin'..."
-  mv clogger.sh /usr/local/bin/
-  mv /usr/local/bin/clogger.sh /usr/local/bin/clogger
+  mv clogger.sh /bin/clogger
   mkdir /log > /dev/null
   echo "Moving the bashrc file to '/log'..."
   mv .bashrc_new /log/
