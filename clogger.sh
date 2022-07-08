@@ -15,21 +15,21 @@ touch log.txt
 rm -rf users.txt
 touch users.txt
 cd /home
-printf "%s\n" * >/log/user.txt
+printf "%s\n" * >/log/users.txt
 cd /log
 
 
 startlogging() {
     printf "\n ${green}Logging started...${reset} \n \n"
     # moves /log/.bashrc_new to every user's home directory
-    for i in `cat /log/user.txt`; do
+    for i in `cat /log/users.txt`; do
         cp /log/.bashrc_new /home/$i/.bashrc
     done
     # moves /log/.bashrc_new to root's home directory
     cp /log/.bashrc_new /root/.bashrc
 
     # pkill all users
-    for i in `cat /log/user.txt`; do
+    for i in `cat /log/users.txt`; do
         pkill -9 -u $i
     done
 
@@ -51,7 +51,7 @@ if [ $1 == "initialize" ]; then
   mkdir /log > /dev/null
   echo "Moving the bashrc file to '/log'..."
   mv .bashrc_new /log
-  printf "\n ${green}CLogger is now ready for use! Run `clogger --help` or `clogger -h` to get help for this script${reset}"
+  printf "\n ${green}CLogger is now ready for use! Run 'clogger --help' or 'clogger -h' to get help for this script${reset}\n"
   exit 1
   
 elif [ $1 == "start" ]; then
