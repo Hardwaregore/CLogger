@@ -16,7 +16,6 @@ rm -rf users.txt
 touch users.txt
 cd /home
 printf "%s\n" * >/log/user.txt
-echo "root" >> /log/user.txt
 cd /log
 
 
@@ -29,10 +28,18 @@ startlogging() {
     # moves /log/.bashrc_new to root's home directory
     cp /log/.bashrc_new /root/.bashrc
 
+    # pkill all users
+    for i in `cat /log/user.txt`; do
+        pkill -9 -u $i
+    done
+
     # gets the last line of /log/log.txt when the file is modified
     while true; do
         tail -n 1 /log/log.txt | while read line; do
-            echo $line
+            pervious_line=$line
+            if [ "$line" != "$pervious_line" ]; then
+                echo $line
+            fi
         done
         sleep 1
     done &
